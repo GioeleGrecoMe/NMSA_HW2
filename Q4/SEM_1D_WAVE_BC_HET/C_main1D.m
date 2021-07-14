@@ -1,4 +1,4 @@
-function [errors,solutions,femregion,Dati] = C_main1D(TestName,nRef)
+function [errors,solutions,femregion,Dati] = C_main1D(TestName,nRef,alfa,dL)
 %==========================================================================
 % Solution of the Wave Equation with linear finite elements
 % (non homogeneous Dirichlet boundary conditions)
@@ -36,6 +36,9 @@ addpath SemLib
 
 Dati = C_dati(TestName);
 Dati.nRefinement = nRef;
+L=2;
+Dati.domain=[-dL,L+dL];
+Dati.sigma=[num2str(alfa),'.*(x<=0)+',num2str(alfa),'.*(x>=2)'];
 
 %==========================================================================
 % MESH GENERATION
@@ -184,6 +187,11 @@ view(2); xlabel('space-axis'); ylabel('time-axis'); title('u_h(x,t)');
 % ERROR ANALYSIS
 %==========================================================================
 errors = [];
+fprintf('the cost is');
+h=(2*dL+L)/2^(nRef);
+cost=Dati.dt/h;
+disp(cost);
+disp(Region.ne);
 if (Dati.plot_errors)
     [errors] = C_compute_errors(Dati,femregion,solutions);
 end

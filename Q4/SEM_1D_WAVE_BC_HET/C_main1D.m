@@ -58,7 +58,7 @@ Dati.sigma=[num2str(alfa),'.*(x<=0)+',num2str(alfa),'.*(x>=2)'];
 % BUILD FINITE ELEMENT MATRICES
 %==========================================================================
 
-[M_nbc,A_nbc,D_nbc,C_nbc] = C_matrix1D(Dati,femregion);
+[M_nbc,A_nbc,C_nbc,D_nbc] = C_matrix1D(Dati,femregion);
 
 
 

@@ -37,7 +37,9 @@ addpath SemLib
 Dati = C_dati(TestName);
 Dati.nRefinement = nRef;
 L=2;
-Dati.domain=[-dL,L+dL];
+xF=L+dL;
+x0=-dL;
+Dati.domain=[x0,xF];
 Dati.sigma=[num2str(alfa),'.*(x<=0)+',num2str(alfa),'.*(x>=2)'];
 
 %==========================================================================
@@ -84,7 +86,7 @@ v0 = eval(Dati.v0);
 
 % Solve the reduced system
 %b_nbc = (M_nbc-0.5*Dati.dt^2*A_nbc)*u0 + Dati.dt*M_nbc*v0  + 0.5*Dati.dt^2*b_nbc;
-b_nbc = (M_nbc-0.5*Dati.dt^2*(A_nbc-C_nbc))*u0+(Dati.dt*M_nbc-0.5*Dati.dt^2*D_nbc)*v0+0.5*Dati.dt^2*b_nbc;
+b_nbc = (M_nbc-0.5*Dati.dt^2*(A_nbc+C_nbc))*u0+(Dati.dt*M_nbc-0.5*Dati.dt^2*D_nbc)*v0+0.5*Dati.dt^2*b_nbc;
 
 %==========================================================================
 % COMPUTE BOUNDARY CONDITIONS -- MODIFICATION OF M an b
@@ -164,6 +166,7 @@ for t = Dati.dt : Dati.dt : Dati.T - Dati.dt
    u_surf(k_surf,:) = u2;
    k_surf = k_surf + 1;
     % update
+    pause(0.015);
     u0 = u1;
     u1 = u2;
     
